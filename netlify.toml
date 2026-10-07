@@ -1,0 +1,14 @@
+# Netlify configuration for the A One Photo Studio Next.js site.
+# Continuous deployment: every push to the connected GitHub branch
+# triggers this build automatically.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Official Next.js runtime — handles SSR, routing and image optimisation on Netlify.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
