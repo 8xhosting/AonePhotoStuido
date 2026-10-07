@@ -1,22 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { reviews } from "@/data/site";
+import { reviews as staticReviews } from "@/data/site";
 
 /**
  * Auto-rotating testimonial carousel with dots and arrow controls.
+ * Accepts DB-driven reviews; falls back to bundled content.
  */
-export default function Testimonials() {
+export default function Testimonials({ reviews }: { reviews?: { name: string; event: string; stars: number; text: string }[] }) {
+  const list = reviews?.length ? reviews : staticReviews;
   const [i, setI] = useState(0);
   const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     if (paused) return;
-    const t = setInterval(() => setI((v) => (v + 1) % reviews.length), 4500);
+    const t = setInterval(() => setI((v) => (v + 1) % list.length), 4500);
     return () => clearInterval(t);
-  }, [paused]);
+  }, [paused, list.length]);
 
-  const go = (dir: 1 | -1) => setI((v) => (v + dir + reviews.length) % reviews.length);
+  const go = (dir: 1 | -1) => setI((v) => (v + dir + list.length) % list.length);
 
   return (
     <div
@@ -26,7 +28,7 @@ export default function Testimonials() {
     >
       <div className="testViewport">
         <div className="testTrack" style={{ transform: `translateX(-${i * 100}%)` }}>
-          {reviews.map((r) => (
+          {list.map((r) => (
             <article className="review" key={r.name + r.event}>
               <div className="person">
                 <span className="avatar" aria-hidden="true">
@@ -51,7 +53,7 @@ export default function Testimonials() {
           ‹
         </button>
         <div className="dots">
-          {reviews.map((_, d) => (
+          {list.map((_, d) => (
             <button key={d} className={d === i ? "active" : ""} onClick={() => setI(d)} aria-label={`Review ${d + 1}`} />
           ))}
         </div>

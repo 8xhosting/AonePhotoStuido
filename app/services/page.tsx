@@ -2,13 +2,21 @@ import type { Metadata } from "next";
 import Services from "@/components/Services";
 import Reveal from "@/components/Reveal";
 import Faq from "@/components/Faq";
+import { getPublicServices, getSeoFor } from "@/lib/public-data";
 
-export const metadata: Metadata = {
-  title: "Services",
-  description: "Wedding, pre-wedding, candid, birthday, newborn, event, drone and editing services by A One Photo Studio.",
-};
+export const revalidate = 30;
 
-export default function ServicesPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeoFor("/services");
+  return {
+    title: seo.title || "Services",
+    description: seo.description || "Wedding, pre-wedding, candid, birthday, newborn, event, drone and editing services by A One Photo Studio.",
+    keywords: seo.keywords || undefined,
+  };
+}
+
+export default async function ServicesPage() {
+  const services = await getPublicServices();
   return (
     <>
       <section className="pageHero">
@@ -21,7 +29,7 @@ export default function ServicesPage() {
       <section className="section">
         <div className="container">
           <Reveal>
-            <Services />
+            <Services items={services} />
           </Reveal>
         </div>
       </section>

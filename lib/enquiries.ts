@@ -20,6 +20,7 @@ export type Enquiry = {
   message: string;
   createdAt: string;
   status: EnquiryStatus;
+  source?: string;
 };
 
 const KEY = "aone_enquiries";

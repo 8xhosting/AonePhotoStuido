@@ -2,13 +2,21 @@ import type { Metadata } from "next";
 import Packages from "@/components/Packages";
 import Faq from "@/components/Faq";
 import Reveal from "@/components/Reveal";
+import { getPublicPackages, getSeoFor } from "@/lib/public-data";
 
-export const metadata: Metadata = {
-  title: "Packages",
-  description: "Transparent photography packages from A One Photo Studio — Basic, Premium and Ultimate plans, customisable on request.",
-};
+export const revalidate = 30;
 
-export default function PackagesPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeoFor("/packages");
+  return {
+    title: seo.title || "Packages",
+    description: seo.description || "Transparent photography packages from A One Photo Studio — Basic, Premium and Ultimate plans, customisable on request.",
+    keywords: seo.keywords || undefined,
+  };
+}
+
+export default async function PackagesPage() {
+  const packages = await getPublicPackages();
   return (
     <>
       <section className="pageHero">
@@ -21,7 +29,7 @@ export default function PackagesPage() {
       <section className="section">
         <div className="container">
           <Reveal>
-            <Packages />
+            <Packages items={packages} />
           </Reveal>
           <Reveal delay={100}>
             <p className="packNote">

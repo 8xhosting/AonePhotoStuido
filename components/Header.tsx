@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { site } from "@/data/site";
+import { site as staticSite } from "@/data/site";
 
 const links = [
   ["/", "Home"],
@@ -16,7 +16,10 @@ const links = [
   ["/contact", "Contact"],
 ];
 
-export default function Header() {
+export type StudioInfo = { phone?: string; phoneRaw?: string; whatsapp?: string; email?: string; address?: string; hours?: string };
+
+export default function Header({ studio }: { studio?: StudioInfo }) {
+  const site = { ...staticSite, ...studio };
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();

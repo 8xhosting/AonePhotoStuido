@@ -2,9 +2,17 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { services, site } from "@/data/site";
+import { services as staticServices, site as staticSite } from "@/data/site";
 
-export default function Footer() {
+export default function Footer({
+  studio,
+  services,
+}: {
+  studio?: { phone?: string; phoneRaw?: string; whatsapp?: string; email?: string; socials?: { label: string; href: string }[] };
+  services?: { slug: string; title: string }[];
+}) {
+  const site = { ...staticSite, ...studio };
+  const serviceList = services?.length ? services : staticServices.slice(0, 5);
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
 
@@ -50,7 +58,7 @@ export default function Footer() {
         </div>
         <div>
           <b>Services</b>
-          {services.slice(0, 5).map((s) => (
+          {serviceList.slice(0, 5).map((s) => (
             <Link key={s.slug} href={`/services/${s.slug}`}>
               {s.title}
             </Link>

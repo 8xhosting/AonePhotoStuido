@@ -9,25 +9,39 @@ import Counter from "@/components/Counter";
 import Marquee from "@/components/Marquee";
 import Faq from "@/components/Faq";
 import { faqs, features, IMG, processSteps, stats } from "@/data/site";
+import {
+  getPublicPackages,
+  getPublicReviews,
+  getPublicServices,
+  getPublicWorks,
+  getSiteContent,
+} from "@/lib/public-data";
 
-export default function Home() {
+export const revalidate = 30; // admin edits go live within ~a minute
+
+export default async function Home() {
+  const [content, services, packages, reviews, worksData] = await Promise.all([
+    getSiteContent(),
+    getPublicServices(),
+    getPublicPackages(),
+    getPublicReviews(),
+    getPublicWorks(),
+  ]);
+
   return (
     <>
       {/* HERO */}
       <section className="hero">
         <div className="container heroGrid">
           <div>
-            <div className="eyebrow">Capture Your Moments</div>
+            <div className="eyebrow">{content.heroEyebrow}</div>
             <h1>
-              A ONE
+              {content.heroTitle}
               <br />
-              <span>PHOTO STUDIO</span>
+              <span>{content.heroTitleAccent}</span>
             </h1>
-            <div className="script">We Frame Your Memories</div>
-            <p className="lead">
-              Professional photography &amp; videography for weddings, pre-weddings, birthdays, new born shoots,
-              events and cinematic stories.
-            </p>
+            <div className="script">{content.heroScript}</div>
+            <p className="lead">{content.heroText}</p>
             <div className="actions">
               <Link className="btn redBtn" href="/booking">
                 Book Your Date →
@@ -44,7 +58,7 @@ export default function Home() {
             </div>
           </div>
           <div className="heroVisual kb">
-            <Image src={IMG.portrait} alt="A One Photo Studio photographer" fill priority sizes="(max-width:1050px) 100vw,55vw" />
+            <Image src={content.heroImage || IMG.portrait} alt="A One Photo Studio photographer" fill priority sizes="(max-width:1050px) 100vw,55vw" />
             <div className="float one">
               <Image src={IMG.poster} alt="" width={300} height={200} style={{ objectPosition: "center 28%" }} />
             </div>
@@ -83,7 +97,7 @@ export default function Home() {
             </div>
           </Reveal>
           <Reveal delay={80}>
-            <Services limit={8} />
+            <Services limit={8} items={services} />
           </Reveal>
         </div>
       </section>
@@ -120,11 +134,8 @@ export default function Home() {
           <Reveal>
             <div>
               <div className="script">About Us</div>
-              <h2 className="headTitle">A One Photo Studio</h2>
-              <p className="lead">
-                We specialize in wedding, pre-wedding, candid, birthday, new born, event and cinematic shoots. Our
-                passion is to capture real emotions and turn them into beautiful memories.
-              </p>
+              <h2 className="headTitle">{content.aboutTitle}</h2>
+              <p className="lead">{content.aboutText}</p>
               <Link className="btn redBtn" href="/about">
                 Know More About Us →
               </Link>
@@ -132,7 +143,7 @@ export default function Home() {
           </Reveal>
           <Reveal delay={100}>
             <div className="collage">
-              <Image src={IMG.studioWall} alt="" width={700} height={800} style={{ objectPosition: "center 55%" }} />
+              <Image src={content.aboutImage || IMG.studioWall} alt="" width={700} height={800} style={{ objectPosition: "center 55%" }} />
               <Image src={IMG.gear} alt="" width={600} height={500} style={{ objectPosition: "center 40%" }} />
               <Image src={IMG.weddingCollage} alt="" width={600} height={500} style={{ objectPosition: "center" }} />
               <div className="badgeFloat">Memories for a lifetime ♥</div>
@@ -156,7 +167,7 @@ export default function Home() {
             </div>
           </Reveal>
           <Reveal delay={80}>
-            <Portfolio limit={6} />
+            <Portfolio limit={6} works={worksData.works} cats={worksData.cats} />
           </Reveal>
         </div>
       </section>
@@ -201,7 +212,7 @@ export default function Home() {
             </div>
           </Reveal>
           <Reveal delay={80}>
-            <Packages />
+            <Packages items={packages} />
           </Reveal>
         </div>
       </section>
@@ -221,7 +232,7 @@ export default function Home() {
             </div>
           </Reveal>
           <Reveal delay={80}>
-            <Testimonials />
+            <Testimonials reviews={reviews} />
           </Reveal>
         </div>
       </section>
@@ -254,7 +265,7 @@ export default function Home() {
                 Let's Capture Your Moments
               </div>
               <h2>Your special moments deserve to be remembered forever.</h2>
-              <p>Book your session or talk to the studio today.</p>
+              <p>{content.contactNote}</p>
               <div className="ctaActions">
                 <Link className="btn whiteBtn" href="/booking">
                   Book Your Session →

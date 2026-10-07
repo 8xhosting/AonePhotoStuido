@@ -18,6 +18,8 @@ function Form() {
   const preService = serviceNames.find((n) => rawService.startsWith(n)) || "";
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sent, setSent] = useState<Enquiry | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -46,10 +48,12 @@ function Form() {
     return Object.keys(e).length === 0;
   };
 
-  const submit = (ev: React.FormEvent) => {
+  const submit = async (ev: React.FormEvent) => {
     ev.preventDefault();
     if (!validate()) return;
-    const enquiry = saveEnquiry({
+    if (honeypot) return; // bot caught by the hidden field — pretend success
+    setBusy(true);
+    const data = {
       name: form.name.trim(),
       phone: form.phone.replace(/\s/g, ""),
       email: form.email.trim(),
@@ -59,8 +63,30 @@ function Form() {
       date: form.date,
       time: form.time,
       message: form.message.trim(),
-    });
-    setSent(enquiry);
+    };
+    try {
+      // Primary path: save straight into the studio's MongoDB via the API
+      const res = await fetch("/api/public/enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error);
+      setSent({
+        ...data,
+        ref: json.ref,
+        createdAt: new Date().toISOString(),
+        status: "New",
+        source: "website",
+      });
+    } catch {
+      // Fallback: keep the enquiry on this device + WhatsApp button still works
+      const enquiry = saveEnquiry(data);
+      setSent(enquiry);
+    } finally {
+      setBusy(false);
+    }
   };
 
   if (sent) {
@@ -157,8 +183,12 @@ function Form() {
             placeholder="Tell us about your event and requirements"
           />
         </label>
-        <button className="btn redBtn full" type="submit">
-          Submit Booking Enquiry →
+        <label className="full" style={{ position: "absolute", left: -9999 }} aria-hidden="true">
+          Company
+          <input tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+        </label>
+        <button className="btn redBtn full" type="submit" disabled={busy}>
+          {busy ? "Sending…" : "Submit Booking Enquiry →"}
         </button>
       </div>
     </form>

@@ -1,13 +1,21 @@
 import type { Metadata } from "next";
 import Testimonials from "@/components/Testimonials";
 import Reveal from "@/components/Reveal";
+import { getPublicReviews, getSeoFor } from "@/lib/public-data";
 
-export const metadata: Metadata = {
-  title: "Testimonials",
-  description: "What couples and families say about A One Photo Studio — real reviews from real celebrations.",
-};
+export const revalidate = 30;
 
-export default function TestimonialsPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeoFor("/testimonials");
+  return {
+    title: seo.title || "Testimonials",
+    description: seo.description || "What couples and families say about A One Photo Studio — real reviews from real celebrations.",
+    keywords: seo.keywords || undefined,
+  };
+}
+
+export default async function TestimonialsPage() {
+  const reviews = await getPublicReviews();
   return (
     <>
       <section className="pageHero">
@@ -20,7 +28,7 @@ export default function TestimonialsPage() {
       <section className="section">
         <div className="container">
           <Reveal>
-            <Testimonials />
+            <Testimonials reviews={reviews} />
           </Reveal>
         </div>
       </section>

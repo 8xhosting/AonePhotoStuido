@@ -1,0 +1,338 @@
+/* ==========================================================================
+   A One Photo Studio — Admin panel styles
+   Matches the site theme: maroon #8d1f2d, warm cream base, Playfair accents.
+   ========================================================================== */
+
+.admShell { display: grid; grid-template-columns: 264px 1fr; min-height: 100vh; background: var(--bg); }
+.admMainWrap { min-width: 0; display: flex; flex-direction: column; }
+
+/* ── Sidebar ─────────────────────────────────────────────────────────────── */
+.admSide {
+  background: linear-gradient(180deg, #1c1013 0%, #2a1418 60%, #1c1013 100%);
+  color: #e9dbd8; padding: 18px 14px 28px; position: sticky; top: 0;
+  height: 100vh; overflow-y: auto; scrollbar-width: thin;
+}
+.admSide::-webkit-scrollbar { width: 5px; }
+.admSide::-webkit-scrollbar-thumb { background: #4a2a30; border-radius: 4px; }
+.admBrand { display: flex; align-items: end; gap: 7px; padding: 6px 10px 16px; border-bottom: 1px solid rgba(255,255,255,.08); margin-bottom: 14px; }
+.admBrand b { font: italic 700 27px "Playfair Display"; color: #fff; }
+.admBrand b span { color: #f0b8bf; }
+.admBrand small { font-size: 7.5px; font-weight: 900; letter-spacing: 1.3px; margin-bottom: 3px; color: #d8ccca; }
+.admGroup { margin-top: 13px; }
+.admGroupLabel { font-size: 10px; font-weight: 900; letter-spacing: 1.6px; text-transform: uppercase; color: #9c7f83; padding: 0 10px 5px; }
+.admSide a {
+  display: flex; align-items: center; gap: 10px; padding: 8.5px 10px; margin: 1.5px 0;
+  border-radius: 10px; color: #d8ccca; font-size: 13.5px; font-weight: 600; transition: .15s;
+}
+.admSide a:hover { background: rgba(255,255,255,.07); color: #fff; }
+.admSide a.active { background: var(--red); color: #fff; box-shadow: 0 6px 16px rgba(141,31,45,.4); }
+.admSide a i { font-style: normal; width: 20px; text-align: center; opacity: .9; font-size: 14px; }
+.admSideFoot { margin-top: 18px; padding: 12px 10px; border-top: 1px solid rgba(255,255,255,.08); font-size: 11px; color: #9c7f83; }
+.admSideFoot a { color: #f0b8bf; padding: 0; display: inline; font-size: 11px; }
+.admSideFoot a:hover { background: none; color: #fff; }
+
+/* ── Topbar ──────────────────────────────────────────────────────────────── */
+.admTop {
+  position: sticky; top: 0; z-index: 40; background: rgba(255,255,255,.92); backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between;
+  gap: 14px; padding: 13px 26px;
+}
+.admTopTitle h1 { font: 700 21px "Playfair Display"; margin: 0; letter-spacing: -.4px; }
+.admTopTitle p { margin: 1px 0 0; font-size: 12px; color: var(--muted); }
+.admTopActions { display: flex; align-items: center; gap: 10px; }
+.admBell {
+  position: relative; width: 40px; height: 40px; border: 1px solid var(--line); border-radius: 50%;
+  background: #fff; display: grid; place-items: center; cursor: pointer; font-size: 15px; transition: .2s;
+}
+.admBell:hover { border-color: var(--red); }
+.admBellDot {
+  position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px; border-radius: 999px;
+  background: var(--red); color: #fff; font-size: 10px; font-weight: 800; display: grid; place-items: center; padding: 0 4px;
+}
+.admUser { display: flex; align-items: center; gap: 9px; }
+.admAvatar {
+  width: 38px; height: 38px; border-radius: 50%; background: var(--red); color: #fff;
+  display: grid; place-items: center; font-weight: 800; font-size: 13px;
+}
+.admUserMeta b { display: block; font-size: 13px; line-height: 1.1; }
+.admUserMeta small { color: var(--muted); font-size: 11px; text-transform: capitalize; }
+.admLogout {
+  border: 1px solid var(--line); background: #fff; border-radius: 10px; padding: 8px 13px;
+  font-weight: 700; font-size: 12.5px; cursor: pointer; color: var(--red); transition: .2s;
+}
+.admLogout:hover { background: var(--red); color: #fff; border-color: var(--red); }
+.admMenuBtn { display: none; }
+
+/* ── Content area ────────────────────────────────────────────────────────── */
+.admMain { padding: 24px 26px 60px; max-width: 1340px; width: 100%; margin: 0 auto; }
+.admHead { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 18px; flex-wrap: wrap; }
+.admHead h2 { font: 700 24px "Playfair Display"; margin: 0; letter-spacing: -.4px; }
+.admHead p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+.admHeadActions { display: flex; gap: 9px; flex-wrap: wrap; }
+
+/* ── Stat cards ──────────────────────────────────────────────────────────── */
+.admStats { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 13px; margin-bottom: 22px; }
+.statCard {
+  background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 16px 17px;
+  display: flex; gap: 13px; align-items: center; transition: .2s;
+}
+.statCard:hover { border-color: #e5c2be; box-shadow: 0 8px 24px rgba(40,20,20,.06); }
+.statIcon {
+  width: 44px; height: 44px; border-radius: 13px; display: grid; place-items: center;
+  font-size: 19px; background: var(--rose); flex-shrink: 0;
+}
+.statCard b { display: block; font: 700 23px "Playfair Display"; color: var(--ink); line-height: 1.05; }
+.statCard span { font-size: 12px; color: var(--muted); font-weight: 700; }
+.statCard small { display: block; font-size: 11px; color: var(--red); font-weight: 700; margin-top: 2px; }
+
+/* ── Panels & lists ──────────────────────────────────────────────────────── */
+.admGrid2 { display: grid; grid-template-columns: 1.15fr .85fr; gap: 16px; align-items: start; }
+.admGrid2 > div { min-width: 0; }
+.panel { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; margin-bottom: 16px; }
+.panelHead { display: flex; justify-content: space-between; align-items: center; padding: 14px 17px 0; }
+.panelHead h3 { margin: 0; font: 700 16px "Playfair Display"; }
+.panelHead a, .panelHead .lnk { font-size: 12px; font-weight: 800; color: var(--red); cursor: pointer; background: none; border: 0; }
+.panelBody { padding: 13px 17px 17px; }
+.rowList { display: flex; flex-direction: column; }
+.rowItem { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px dashed var(--line); font-size: 13px; }
+.rowItem:last-child { border-bottom: 0; }
+.rowItem b { font-size: 13.5px; }
+.rowItem small { display: block; color: var(--muted); font-size: 11.5px; margin-top: 1px; }
+.empty { text-align: center; color: var(--muted); font-size: 13px; padding: 26px 10px; }
+
+/* ── Table ───────────────────────────────────────────────────────────────── */
+.admTableCard { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.admTableScroll { overflow-x: auto; }
+table.admTbl { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 640px; }
+.admTbl th {
+  text-align: left; font-size: 10.5px; letter-spacing: 1.1px; text-transform: uppercase;
+  color: var(--muted); padding: 12px 14px; border-bottom: 1px solid var(--line); background: #fdf7f5; white-space: nowrap;
+}
+.admTbl td { padding: 11px 14px; border-bottom: 1px solid #f3eae8; vertical-align: middle; }
+.admTbl tr:last-child td { border-bottom: 0; }
+.admTbl tr:hover td { background: #fdfaf9; }
+.admTbl .cellMain { font-weight: 700; color: var(--ink); }
+.admTbl .cellSub { font-size: 11.5px; color: var(--muted); }
+.admTbl .actions { display: flex; gap: 6px; justify-content: flex-end; }
+.admTbl td.num { font-weight: 800; white-space: nowrap; }
+
+.rowBtn {
+  width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--line); background: #fff;
+  display: grid; place-items: center; cursor: pointer; font-size: 13px; color: var(--ink); transition: .15s;
+}
+.rowBtn:hover { border-color: var(--red); color: var(--red); }
+.rowBtn.danger:hover { background: #b3261e; border-color: #b3261e; color: #fff; }
+.rowBtn.wa:hover { background: var(--wa); border-color: var(--wa); color: #fff; }
+
+/* ── Pills / badges ──────────────────────────────────────────────────────── */
+.pill {
+  display: inline-block; padding: 3.5px 10px; border-radius: 999px; font-size: 11px; font-weight: 800; white-space: nowrap;
+}
+.pill.New, .pill.Pending { background: #e8f0fe; color: #1a56b8; }
+.pill.Contacted, .pill.Partial { background: #fef3e2; color: #b06000; }
+.pill.Follow-up { background: #f3e8fd; color: #7b2cbf; }
+.pill.Quoted { background: #e0f4fb; color: #0b6e8f; }
+.pill.Confirmed, .pill.Paid, .pill.Completed { background: #e3f5e9; color: #177245; }
+.pill.Cancelled, .pill.Refunded { background: #fdeaea; color: #b3261e; }
+.pill.grey { background: #f0eceb; color: #6b6462; }
+
+/* ── Toolbar (search + filters) ──────────────────────────────────────────── */
+.admToolbar { display: flex; gap: 9px; align-items: center; flex-wrap: wrap; margin-bottom: 13px; }
+.admSearch {
+  flex: 1; min-width: 200px; max-width: 340px; display: flex; align-items: center; gap: 8px;
+  background: #fff; border: 1px solid var(--line); border-radius: 11px; padding: 9px 13px;
+}
+.admSearch input { border: 0; outline: 0; flex: 1; font-size: 13px; background: transparent; }
+.chipFilters { display: flex; gap: 6px; flex-wrap: wrap; }
+.chipFilters button {
+  border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 6.5px 13px;
+  font-size: 12px; font-weight: 700; cursor: pointer; color: var(--muted); transition: .15s;
+}
+.chipFilters button:hover { border-color: var(--red); color: var(--red); }
+.chipFilters button.active { background: var(--red); border-color: var(--red); color: #fff; }
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.admBtn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 10px 16px; border-radius: 11px; font-weight: 800; font-size: 13px; cursor: pointer;
+  border: 1px solid var(--red); transition: .2s; background: #fff; color: var(--red);
+}
+.admBtn.primary { background: var(--red); color: #fff; }
+.admBtn.primary:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(141,31,45,.3); }
+.admBtn:hover { border-color: var(--red); }
+.admBtn:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+.admBtn.small { padding: 6.5px 11px; font-size: 12px; border-radius: 9px; }
+.admBtn.wa { border-color: var(--wa); color: #14804a; background: #f0fbf5; }
+.admBtn.wa:hover { background: var(--wa); color: #fff; }
+
+/* ── Modal & forms ───────────────────────────────────────────────────────── */
+.modalOverlay {
+  position: fixed; inset: 0; background: rgba(23,15,17,.55); backdrop-filter: blur(3px);
+  z-index: 90; display: grid; place-items: center; padding: 20px; overflow-y: auto;
+}
+.modalPanel {
+  background: #fff; border-radius: 18px; width: 100%; max-width: 680px; max-height: 92vh;
+  overflow-y: auto; box-shadow: 0 30px 80px rgba(0,0,0,.35); animation: popIn .18s ease;
+}
+@keyframes popIn { from { transform: scale(.96) translateY(8px); opacity: 0; } to { transform: none; opacity: 1; } }
+.modalHead {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 17px 22px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: #fff; z-index: 2;
+  border-radius: 18px 18px 0 0;
+}
+.modalHead h3 { margin: 0; font: 700 18px "Playfair Display"; }
+.modalClose {
+  width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: #fff;
+  cursor: pointer; font-size: 16px; color: var(--muted);
+}
+.modalClose:hover { border-color: #b3261e; color: #b3261e; }
+.modalBody { padding: 20px 22px; }
+.modalFoot { display: flex; justify-content: flex-end; gap: 9px; padding: 15px 22px; border-top: 1px solid var(--line); position: sticky; bottom: 0; background: #fff; }
+.formGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+.formGrid .full { grid-column: 1 / -1; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field > label { font-size: 12px; font-weight: 800; color: #3b2d30; }
+.field > label em { color: #b3261e; font-style: normal; }
+.field input, .field select, .field textarea {
+  border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font-size: 13.5px;
+  outline: none; background: #fff; transition: .15s; width: 100%;
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(141,31,45,.1); }
+.field textarea { min-height: 84px; resize: vertical; }
+.field .hint { font-size: 11px; color: var(--muted); }
+.checkRow { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; padding-top: 20px; }
+.checkRow input { width: 17px; height: 17px; accent-color: var(--red); }
+.formErr { background: #fdeaea; color: #b3261e; border-radius: 10px; padding: 10px 13px; font-size: 12.5px; font-weight: 700; grid-column: 1 / -1; }
+
+/* tags editor */
+.tagBox { display: flex; flex-wrap: wrap; gap: 6px; border: 1px solid var(--line); border-radius: 10px; padding: 8px; background: #fff; }
+.tagBox .tag { display: inline-flex; align-items: center; gap: 6px; background: var(--rose); border-radius: 999px; padding: 4px 10px; font-size: 12px; font-weight: 700; }
+.tagBox .tag button { border: 0; background: none; cursor: pointer; color: var(--red); font-weight: 900; padding: 0; }
+.tagBox input { border: 0 !important; outline: 0; flex: 1; min-width: 110px; font-size: 13px; padding: 4px !important; box-shadow: none !important; }
+
+/* image upload */
+.imgUp { display: flex; gap: 10px; align-items: center; }
+.imgUp img { width: 74px; height: 56px; object-fit: cover; border-radius: 10px; border: 1px solid var(--line); }
+.imgUp .upBtn { font-size: 12.5px; font-weight: 800; color: var(--red); background: var(--rose); border-radius: 9px; padding: 9px 13px; cursor: pointer; border: 0; }
+.imgUp .upBtn.busy { opacity: .6; pointer-events: none; }
+.imgUp .clearBtn { font-size: 11.5px; color: var(--muted); background: none; border: 0; cursor: pointer; text-decoration: underline; }
+.imgList { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 9px; }
+.imgCell { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: #f6f1ef; aspect-ratio: 4/3; }
+.imgCell img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.imgCell button {
+  position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; border-radius: 50%;
+  border: 0; background: rgba(179,38,30,.92); color: #fff; font-size: 12px; cursor: pointer; line-height: 1;
+}
+.imgCell .cap { position: absolute; left: 0; right: 0; bottom: 0; }
+.imgCell .cap input { width: 100%; border: 0; border-top: 1px solid var(--line); font-size: 10.5px; padding: 4px; outline: none; }
+.imgCell .cover { position: absolute; left: 4px; top: 4px; background: var(--red); color: #fff; font-size: 9px; font-weight: 900; padding: 2px 7px; border-radius: 999px; letter-spacing: .6px; }
+
+/* ── Charts ──────────────────────────────────────────────────────────────── */
+.barChart { display: flex; align-items: flex-end; gap: 13px; height: 170px; padding-top: 8px; }
+.barCol { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: flex-end; }
+.barCol .bars { display: flex; gap: 4px; align-items: flex-end; height: 100%; width: 100%; justify-content: center; }
+.barCol .bar { width: 42%; max-width: 26px; border-radius: 7px 7px 0 0; min-height: 3px; transition: .3s; }
+.barCol .bar.rev { background: var(--red); }
+.barCol .bar.bk { background: #f0b8bf; }
+.barCol small { font-size: 10.5px; color: var(--muted); font-weight: 800; }
+.legend { display: flex; gap: 13px; font-size: 11.5px; color: var(--muted); font-weight: 700; margin-top: 9px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; font-style: normal; }
+.hBars { display: flex; flex-direction: column; gap: 9px; }
+.hBar { display: grid; grid-template-columns: 120px 1fr 40px; align-items: center; gap: 9px; font-size: 12.5px; }
+.hBar .track { height: 9px; background: var(--rose); border-radius: 999px; overflow: hidden; }
+.hBar .fill { height: 100%; background: var(--red); border-radius: 999px; }
+.hBar b { text-align: right; font-size: 12px; }
+
+/* ── Calendar ────────────────────────────────────────────────────────────── */
+.calHead { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; gap: 10px; flex-wrap: wrap; }
+.calHead h2 { font: 700 22px "Playfair Display"; margin: 0; }
+.calNav { display: flex; gap: 7px; }
+.calLegend { display: flex; gap: 10px; flex-wrap: wrap; font-size: 11.5px; font-weight: 700; color: var(--muted); }
+.calLegend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; font-style: normal; }
+.calGrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 7px; }
+.calDow { text-align: center; font-size: 10.5px; font-weight: 900; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; padding: 4px 0; }
+.calCell {
+  background: #fff; border: 1px solid var(--line); border-radius: 12px; min-height: 96px; padding: 7px 8px;
+  display: flex; flex-direction: column; gap: 4px; transition: .15s; cursor: default;
+}
+.calCell.dim { opacity: .45; }
+.calCell.today { border-color: var(--red); box-shadow: 0 0 0 2px rgba(141,31,45,.15); }
+.calCell .d { font-size: 12px; font-weight: 800; color: var(--muted); }
+.calCell.today .d { color: var(--red); }
+.calEv { font-size: 10.5px; font-weight: 800; color: #fff; border-radius: 6px; padding: 3px 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.calMore { font-size: 10px; font-weight: 800; color: var(--red); }
+
+/* ── Album / portfolio grid ──────────────────────────────────────────────── */
+.albumGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+.albumCard { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; transition: .2s; }
+.albumCard:hover { box-shadow: 0 10px 28px rgba(40,20,20,.09); transform: translateY(-2px); }
+.albumCard .thumb { aspect-ratio: 4/3; position: relative; background: var(--rose); }
+.albumCard .thumb img { width: 100%; height: 100%; object-fit: cover; }
+.albumCard .meta { padding: 12px 14px; }
+.albumCard .meta b { font-size: 14px; display: block; }
+.albumCard .meta small { color: var(--muted); font-size: 11.5px; }
+.albumCard .feat { position: absolute; top: 8px; left: 8px; background: var(--red); color: #fff; font-size: 9.5px; font-weight: 900; letter-spacing: .7px; padding: 3px 8px; border-radius: 999px; }
+.albumCard .cnt { position: absolute; bottom: 8px; right: 8px; background: rgba(23,15,17,.75); color: #fff; font-size: 10.5px; font-weight: 800; padding: 3px 8px; border-radius: 999px; }
+.albumCard .acts { display: flex; gap: 6px; padding: 0 14px 13px; }
+
+/* ── Notifications ───────────────────────────────────────────────────────── */
+.notifItem { display: flex; gap: 12px; padding: 13px 0; border-bottom: 1px dashed var(--line); align-items: flex-start; }
+.notifItem:last-child { border: 0; }
+.notifDot { width: 9px; height: 9px; border-radius: 50%; background: var(--red); margin-top: 6px; flex-shrink: 0; }
+.notifDot.read { background: var(--line); }
+.notifItem b { font-size: 13.5px; }
+.notifItem p { margin: 2px 0 0; font-size: 12.5px; color: var(--muted); }
+.notifItem small { font-size: 11px; color: #a39a97; white-space: nowrap; }
+
+/* ── WhatsApp templates ──────────────────────────────────────────────────── */
+.tplCard { background: #fff; border: 1px solid var(--line); border-radius: 15px; padding: 15px 17px; margin-bottom: 12px; }
+.tplCard .tplTop { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 7px; }
+.tplCard h4 { margin: 0; font-size: 14.5px; }
+.tplCard pre {
+  margin: 0; background: #fdf7f5; border: 1px dashed var(--line); border-radius: 10px;
+  padding: 11px 13px; font-size: 12.5px; white-space: pre-wrap; font-family: "DM Sans", sans-serif; color: #3b2d30;
+}
+.tplCard .vars { font-size: 11px; color: var(--muted); margin-top: 7px; }
+
+/* ── Settings / content forms ────────────────────────────────────────────── */
+.setGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; align-items: start; }
+.saveBar { position: sticky; bottom: 14px; display: flex; justify-content: flex-end; margin-top: 16px; z-index: 5; }
+.saveBar .inner { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; box-shadow: 0 12px 30px rgba(40,20,20,.12); display: flex; gap: 9px; align-items: center; }
+.saveBar .saved { font-size: 12px; color: #177245; font-weight: 800; }
+
+/* ── Login / setup ───────────────────────────────────────────────────────── */
+.loginWrap {
+  min-height: 100vh; display: grid; place-items: center; padding: 20px;
+  background: linear-gradient(140deg, #1c1013 0%, #40161f 55%, #1c1013 100%);
+}
+.loginCard {
+  width: 100%; max-width: 420px; background: #fff; border-radius: 22px; padding: 34px 32px 30px;
+  box-shadow: 0 40px 90px rgba(0,0,0,.5); text-align: center;
+}
+.loginCard .brand { justify-content: center; margin-bottom: 4px; }
+.loginCard .brand b { font: italic 700 40px "Playfair Display"; color: var(--red); }
+.loginCard .brand small { font-size: 9px; font-weight: 900; letter-spacing: 1.6px; margin-bottom: 5px; }
+.loginCard .script { font-size: 27px; margin-bottom: 4px; }
+.loginCard p.sub { color: var(--muted); font-size: 13px; margin: 0 0 22px; }
+.loginCard form { display: flex; flex-direction: column; gap: 12px; text-align: left; }
+.loginCard .err { background: #fdeaea; color: #b3261e; border-radius: 10px; padding: 10px 13px; font-size: 12.5px; font-weight: 700; }
+.loginCard .note { font-size: 11.5px; color: var(--muted); margin-top: 16px; line-height: 1.5; }
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 980px) {
+  .admShell { grid-template-columns: 1fr; }
+  .admSide {
+    position: fixed; left: 0; top: 0; bottom: 0; width: 264px; z-index: 80; transform: translateX(-102%);
+    transition: transform .25s ease;
+  }
+  .admSide.open { transform: none; box-shadow: 30px 0 60px rgba(0,0,0,.4); }
+  .admMenuBtn { display: grid; }
+  .admGrid2 { grid-template-columns: 1fr; }
+  .formGrid { grid-template-columns: 1fr; }
+  .calCell { min-height: 64px; }
+  .calEv { display: none; }
+  .calCell.hasEv { position: relative; }
+  .calCell.hasEv::after { content: "•"; color: var(--red); font-size: 18px; line-height: .5; position: absolute; bottom: 6px; right: 8px; }
+  .admTop { padding: 12px 16px; }
+  .admMain { padding: 18px 16px 50px; }
+}

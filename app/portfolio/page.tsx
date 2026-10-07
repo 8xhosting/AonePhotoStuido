@@ -1,13 +1,21 @@
 import type { Metadata } from "next";
 import Portfolio from "@/components/Portfolio";
 import Reveal from "@/components/Reveal";
+import { getPublicWorks, getSeoFor } from "@/lib/public-data";
 
-export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "A visual collection of weddings, pre-weddings, celebrations and cinematic moments by A One Photo Studio.",
-};
+export const revalidate = 30;
 
-export default function PortfolioPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeoFor("/portfolio");
+  return {
+    title: seo.title || "Portfolio",
+    description: seo.description || "A visual collection of weddings, pre-weddings, celebrations and cinematic moments by A One Photo Studio.",
+    keywords: seo.keywords || undefined,
+  };
+}
+
+export default async function PortfolioPage() {
+  const { works, cats } = await getPublicWorks();
   return (
     <>
       <section className="pageHero">
@@ -20,7 +28,7 @@ export default function PortfolioPage() {
       <section className="section">
         <div className="container">
           <Reveal>
-            <Portfolio />
+            <Portfolio works={works} cats={cats} />
           </Reveal>
         </div>
       </section>

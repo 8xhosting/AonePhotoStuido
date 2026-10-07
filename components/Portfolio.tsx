@@ -2,19 +2,31 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
-import { portfolio, workCats } from "@/data/site";
+import { portfolio as staticPortfolio, workCats as staticCats } from "@/data/site";
+import type { Work } from "@/data/site";
 
 /**
  * Filterable portfolio grid with a full lightbox:
  * prev/next buttons, keyboard arrows, Escape to close, caption + counter.
+ * Accepts DB-driven albums (flattened); falls back to bundled content.
  */
-export default function Portfolio({ limit }: { limit?: number }) {
+export default function Portfolio({
+  limit,
+  works,
+  cats,
+}: {
+  limit?: number;
+  works?: Work[];
+  cats?: string[];
+}) {
   const [cat, setCat] = useState("All");
   const [index, setIndex] = useState<number | null>(null);
 
-  const all = limit ? portfolio.slice(0, limit) : portfolio;
+  const allWorks = works?.length ? works : staticPortfolio;
+  const allCats = cats?.length ? cats : staticCats;
+  const all = limit ? allWorks.slice(0, limit) : allWorks;
   const items = cat === "All" ? all : all.filter((x) => x.cat === cat);
-  const cats = workCats.filter((c) => c === "All" || all.some((x) => x.cat === c));
+  const visibleCats = allCats.filter((c) => c === "All" || all.some((x) => x.cat === c));
 
   const close = useCallback(() => setIndex(null), []);
   const step = useCallback(
@@ -43,7 +55,7 @@ export default function Portfolio({ limit }: { limit?: number }) {
   return (
     <>
       <div className="filters">
-        {cats.map((c) => (
+        {visibleCats.map((c) => (
           <button
             key={c}
             className={cat === c ? "active" : ""}
